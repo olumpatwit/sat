@@ -1,5 +1,6 @@
 import random
 class Element:
+    __slots__ = ("negated", "term")
     def __init__(self, term, negated = False):
         self.negated = negated
         self.term = term
@@ -14,17 +15,26 @@ class Element:
         return ~base if self.negate else base
 def DPLL(clauses):
     if not clauses:
-        return True
+        return True, {}
     for clause in clauses:
         if len(clause) == 0:
-            return False
+            return False, None
         if len(clause) == 1:
             one, = clause
-            return DPLL(simplify(clauses, one))
+            found, sofar = DPLL(simplify(clauses, one))
+            if found:
+                sofar[one.term] = not one.negated
+            return found, sofar
     clause = clauses[0]
     base = next(iter(clause))
-    return DPLL(simplify(clauses, base)) or \
-           DPLL(simplify(clauses, base.negate()))
+    first, sofar =  DPLL(simplify(clauses, base))
+    if first:
+        sofar[base.term] = not base.negated
+        return True, sofar
+    second, sofar = DPLL(simplify(clauses, base.negate()))
+    if second:
+        sofar[base.term] = base.negated
+    return second, sofar
 def simplify(clauses, assume):
     new = []
     remove = assume.negate()
@@ -38,7 +48,41 @@ def generate_random_clause(k, m, n):
     for _ in range(m):
         new = random.sample(poss, k)
         for i, clause in enumerate(new):
-            if random.randrange(2):
+            if randbool():
                 new[i] = clause.negate()
         output.append(set(new))
     return output
+def randbool():
+    return random.randint(0, 1)
+def satisfies(clause, terms):
+    for var in clause:
+        if var.term in terms and var.negated != terms[var.term]:
+            return True
+    return False
+def satisfies_list(clauses, terms):
+    return all(satisfies(clause, terms) for clause in clauses)
+def walksat(clauses, p, limit):
+    # Bootstrapping
+    terms = {}
+    for clause in clauses:
+        for term in clause:
+            if term.term not in terms:
+                terms[term.term] = randbool()
+    # Main loop
+    for _ in range(limit):
+        for clause in clauses:
+            if not satisfies(clause, terms):
+                break
+        else:
+            return terms
+        if random.random() <= p:
+            choice = random.choice(list(clause))
+        else:
+            choice = max(clause, key=lambda term:satisfied_choices(clauses, terms, term.term))
+        choice = choice.term
+        terms[choice] = not terms[choice]
+def satisfied_choices(clauses, terms, alt):
+    terms[alt] = not terms[alt]
+    rv = len([clause for clause in clauses if satisfies(clause, terms)])
+    terms[alt] = not terms[alt]
+    return rv
