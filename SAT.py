@@ -35,6 +35,69 @@ def DPLL(clauses):
     if second:
         sofar[base.term] = base.negated
     return second, sofar
+def makecset(clauses):
+    if len(clauses) < 3:
+        return [clauses]
+    csets = []
+    rvmap = {}
+    for clause in clauses:
+        guess = None
+        for term in clause:
+            term = term.term
+            old = rvmap.get(term)
+            if guess:
+                if old:
+                    for oldterm in old:
+                        rvmap[oldterm] = guess
+                        guess.add(oldterm)
+                else:
+                   guess.add(term)
+            else:
+                guess = old or {term}
+            rvmap[term] = guess
+            
+    rv = {}
+    for clause in clauses:
+        entry = rvmap[next(iter(clause)).term]
+        try:
+            rv[tuple(entry)].append(clause)
+        except KeyError:
+            rv[tuple(entry)] = [clause]
+    return list(rv.values())
+def DPLL2(clauses, skip_cset=0):
+    if not clauses:
+        return True, {}
+    for clause in clauses:
+        if len(clause) == 0:
+            return False, None
+        if len(clause) == 1:
+            one, = clause
+            found, sofar = DPLL2(simplify(clauses, one), skip_cset-1)
+            if found:
+                sofar[one.term] = not one.negated
+            return found, sofar
+    if not skip_cset:
+        cset = makecset(clauses)
+        if len(cset) > 1:
+            sofar = {}
+            for subset in cset:
+                found, foundmap = DPLL2(subset, 10)
+                if not found:
+                    return False, None
+                sofar.update(foundmap)
+            return True, foundmap
+        skip_cset = 11
+    clause = clauses[0]
+    base = next(iter(clause))
+    first, sofar =  DPLL2(simplify(clauses, base), skip_cset-1)
+    if first:
+        sofar[base.term] = not base.negated
+        return True, sofar
+    second, sofar = DPLL2(simplify(clauses, base.negate()), skip_cset-1)
+    if second:
+        sofar[base.term] = base.negated
+    return second, sofar
+
 def simplify(clauses, assume):
     new = []
     remove = assume.negate()
