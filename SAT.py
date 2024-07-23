@@ -64,40 +64,88 @@ def makecset(clauses):
         except KeyError:
             rv[tuple(entry)] = [clause]
     return list(rv.values())
-def DPLL2(clauses, skip_cset=0):
+from collections import defaultdict
+def DPLL2(clauses,first=True, variable_order=[]):
     if not clauses:
         return True, {}
+    varcounts = defaultdict(int)
+    variables = {}
+    discard = set()
+    remove = set()
+    sofar2 = {}
     for clause in clauses:
+        # Empty clause = false
         if len(clause) == 0:
             return False, None
-        if len(clause) == 1:
+        # One-element clause - assume it
+        elif len(clause) == 1:
             one, = clause
-            found, sofar = DPLL2(simplify(clauses, one), skip_cset-1)
+            discard.add(one)
+            remove.add(one.negate())
+            sofar2[one.term] = not one.negated
+        elif first or not variable_order:
+            for term in clause:
+                varcounts[term.term] += 1
+                variables[term.term] = term
+    if discard:
+        new_clauses = simplify_set(clauses, discard, remove)
+        found, sofar = DPLL2(new_clauses, first, variable_order)
+        if found:
+            sofar.update(sofar2)
+        return found, sofar
+    if first:
+        sofar2 = {}
+        discard = set()
+        remove = set()
+        for k, v in varcounts.items():
+            if v == 1:
+                sofar2[k] = not variables[k].negated
+                discard.add(variables[k])
+                remove.add(variables[k].negate())
+        if discard:
+            new_clauses = []
+            for clause in clauses:
+                if clause.isdisjoint(discard):
+                    new_clauses.append(clause-remove)
+            found, sofar = DPLL2(new_clauses, True)
             if found:
-                sofar[one.term] = not one.negated
+                sofar.update(sofar2)
             return found, sofar
-    if not skip_cset:
         cset = makecset(clauses)
         if len(cset) > 1:
             sofar = {}
             for subset in cset:
-                found, foundmap = DPLL2(subset, 10)
+                found, foundmap = DPLL2(subset, True)
                 if not found:
                     return False, None
                 sofar.update(foundmap)
             return True, foundmap
-        skip_cset = 11
-    clause = clauses[0]
-    base = next(iter(clause))
-    first, sofar =  DPLL2(simplify(clauses, base), skip_cset-1)
+    if first or not variable_order:
+        varkeys = sorted(variables,key=lambda x:varcounts[x])
+        variable_order = [variables[k] for k in varkeys]
+    base = variable_order.pop()
+    first, sofar =  DPLL2(simplify(clauses, base), False, variable_order)
     if first:
+        sofar.update(sofar2)
         sofar[base.term] = not base.negated
         return True, sofar
-    second, sofar = DPLL2(simplify(clauses, base.negate()), skip_cset-1)
+    second, sofar = DPLL2(simplify(clauses, base.negate()), False, variable_order)
     if second:
+        sofar.update(sofar2)
         sofar[base.term] = base.negated
+    variable_order.append(base)
     return second, sofar
-
+def simplify_set(clauses, discard, remove):
+    if not discard:
+        return clauses
+    if discard&remove:
+        # We're trying to assume two incompatible things, fail
+        return [set()]
+    new_clauses = []
+    for clause in clauses:
+        if clause.isdisjoint(discard):
+            new_clauses.append(clause-remove)
+    return new_clauses
 def simplify(clauses, assume):
     new = []
     remove = assume.negate()
