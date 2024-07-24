@@ -13,7 +13,7 @@ class Element:
     def __hash__(self):
         base = hash(self.term)
         return ~base if self.negate else base
-def DPLL(clauses):
+def raw_sort(clauses):
     if not clauses:
         return True, {}
     for clause in clauses:
@@ -65,11 +65,12 @@ def makecset(clauses):
             rv[tuple(entry)] = [clause]
     return list(rv.values())
 from collections import defaultdict
-def DPLL2(clauses,first=True, variable_order=[]):
+def DPLL2(clauses, variable_order=[]):
     if not clauses:
         return True, {}
     varcounts = defaultdict(int)
     variables = {}
+    impure_symbols = set()
     discard = set()
     remove = set()
     sofar2 = {}
@@ -83,53 +84,53 @@ def DPLL2(clauses,first=True, variable_order=[]):
             discard.add(one)
             remove.add(one.negate())
             sofar2[one.term] = not one.negated
-        elif first or not variable_order:
-            for term in clause:
-                varcounts[term.term] += 1
-                variables[term.term] = term
+        for term in clause:
+            varcounts[term.term] += 1
+            if term.term in variables and variables[term.term] != term:
+                impure_symbols.add(term.term)
+            variables[term.term] = term
     if discard:
         new_clauses = simplify_set(clauses, discard, remove)
-        found, sofar = DPLL2(new_clauses, first, variable_order)
+        found, sofar = DPLL2(new_clauses)
         if found:
             sofar.update(sofar2)
         return found, sofar
-    if first:
-        sofar2 = {}
-        discard = set()
-        remove = set()
-        for k, v in varcounts.items():
-            if v == 1:
-                sofar2[k] = not variables[k].negated
-                discard.add(variables[k])
-                remove.add(variables[k].negate())
-        if discard:
-            new_clauses = []
-            for clause in clauses:
-                if clause.isdisjoint(discard):
-                    new_clauses.append(clause-remove)
-            found, sofar = DPLL2(new_clauses, True)
-            if found:
-                sofar.update(sofar2)
-            return found, sofar
-        cset = makecset(clauses)
-        if len(cset) > 1:
-            sofar = {}
-            for subset in cset:
-                found, foundmap = DPLL2(subset, True)
-                if not found:
-                    return False, None
-                sofar.update(foundmap)
-            return True, foundmap
-    if first or not variable_order:
+    sofar2 = {}
+    discard = set()
+    remove = set()
+    for pure in variables.keys() - impure_symbols:
+        sofar2[pure] = not variables[pure].negated
+        discard.add(variables[pure])
+        remove.add(variables[pure].negate())
+    if discard:
+        new_clauses = []
+        for clause in clauses:
+            if clause.isdisjoint(discard):
+                new_clauses.append(clause-remove)
+        found, sofar = DPLL2(new_clauses)
+        if found:
+            sofar.update(sofar2)
+        return found, sofar
+        #cset = makecset(clauses)
+        #if len(cset) > 1:
+        #    print("performing cset split")
+        #    sofar = {}
+        #    for subset in cset:
+        #        found, foundmap = DPLL2(subset, True)
+        #        if not found:
+        #            return False, None
+        #        sofar.update(foundmap)
+        #    return True, foundmap
+    if not variable_order:
         varkeys = sorted(variables,key=lambda x:varcounts[x])
         variable_order = [variables[k] for k in varkeys]
     base = variable_order.pop()
-    first, sofar =  DPLL2(simplify(clauses, base), False, variable_order)
+    first, sofar =  DPLL2(simplify(clauses, base), variable_order)
     if first:
         sofar.update(sofar2)
         sofar[base.term] = not base.negated
         return True, sofar
-    second, sofar = DPLL2(simplify(clauses, base.negate()), False, variable_order)
+    second, sofar = DPLL2(simplify(clauses, base.negate()), variable_order)
     if second:
         sofar.update(sofar2)
         sofar[base.term] = base.negated
