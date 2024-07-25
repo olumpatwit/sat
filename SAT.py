@@ -11,8 +11,7 @@ class Element:
     def __eq__(self, other):
         return self.term == other.term and self.negated == other.negated
     def __hash__(self):
-        base = hash(self.term)
-        return ~base if self.negate else base
+        return hash((self.term,self.negated))
 def raw_sort(clauses):
     if not clauses:
         return True, {}
