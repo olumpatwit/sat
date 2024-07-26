@@ -2,6 +2,7 @@ import random
 class Element:
     __slots__ = ("negated", "term")
     def __init__(self, term, negated = False):
+        assert not isinstance(term, Element)
         self.negated = negated
         self.term = term
     def negate(self):
@@ -157,7 +158,7 @@ def simplify(clauses, assume):
             new.append(clause-{remove})
     return new
 def generate_random_clause(k, m, n):
-    poss = [Element(str(i)) for i in range(n)]
+    poss = [Element(str(i)+"q") for i in range(n)]
     output = []
     for _ in range(m):
         new = random.sample(poss, k)

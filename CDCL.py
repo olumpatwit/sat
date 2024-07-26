@@ -13,7 +13,7 @@ def build_bcp_map(clauses, terms = None):
     terms = terms or defaultdict(set)
     for clause in clauses:
         for term in clause:
-            terms[term.term].add(clause)
+            terms[term].add(frozenset(clause))
     return terms
 def bcp(clausemap, assignments, base, dl):
     if not isinstance(base, list):
@@ -24,7 +24,8 @@ def bcp(clausemap, assignments, base, dl):
         if isinstance(what, list):
             clauses = what
         else:
-            clauses = clausemap[what.term]
+            neg = what.negate()
+            clauses = clausemap[neg]
         for clause in clauses:
             unseen = []
             for term in clause:
@@ -74,11 +75,14 @@ def cdcl(clauses):
     conflict, clause = bcp(clausemap, assignments, clauses, dl)
     if conflict:
         return False
-    while len(assignments) < len(clausemap):
-        guess = max(clausemap.keys()-assignments.keys(),key=lambda x:len(clausemap[x]))
-        val = random.choice([True, False])
+    while True:
+        try:
+            guess = max((k for k in clausemap if k.term not in assignments),
+                        key=lambda x:len(clausemap[x]))
+        except ValueError:
+            break
         dl += 1
-        conflict, clause = bcp(clausemap, assignments, Element(guess, val), dl)
+        conflict, clause = bcp(clausemap, assignments, guess, dl)
         if not conflict:
             continue
         while True:
@@ -94,15 +98,16 @@ def cdcl(clauses):
             conflict, clause = bcp(clausemap, assignments, [new_clause], dl)
             if not conflict:
                 break
-    print(dl)
     rv = {k:v.value for k,v in assignments.items()}
     assert satisfies_list(clauses, rv)
     return rv
+"""
 clauses = [{n(2),n(3),n(4),e(5)},{n(1),n(5),e(6)},{n(5),e(7)},
            {n(1),n(6),n(7)},{n(1),n(2),e(5)},{n(1),n(3),e(5)},
            {n(1),n(4),e(5)},{n(1),e(2),e(3),e(4),e(5),n(6)}]
+
 random.seed(1)
-for x in range(10,600,10):
+for x in range(10,500,10):
     clauses = generate_random_clause(3,x*4,x)
     import timeit
     print("---",x)
@@ -112,3 +117,10 @@ for x in range(10,600,10):
         print("dpll", timeit.timeit("DPLL2(clauses)","from __main__ import DPLL2,clauses",number=1))
         print("dpll", SAT.falsechecks)
     SAT.falsechecks = backtracks = 0
+"""
+random.seed(10)
+cdcl([[n(1),n(0)],[e(1),e(0)]])
+print("Welcome to the new world")
+nn=200
+g = generate_random_clause(3,int(4.2)*nn,nn)
+print(cdcl(g))
