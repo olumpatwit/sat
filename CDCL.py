@@ -9,6 +9,7 @@ class Assignment:
     value: bool
     antecedent: list | None
     dl: int  # decision level
+    
 def build_bcp_map(clauses, terms = None):
     terms = terms or defaultdict(set)
     for clause in clauses:
@@ -57,11 +58,11 @@ def resolve_conflict(clause, assignments, dl):
         final_clause.update(resolvent)
         final_clause.remove(lit)
         final_clause.remove(lit.negate())
-    decision_levels = sorted(set(assignments[literal.term].dl for literal in final_clause))
-    if len(decision_levels) <= 1:
-        return 0, frozenset(final_clause)
-    else:
+    decision_levels = sorted({assignments[literal.term].dl for literal in final_clause})
+    try:
         return decision_levels[-2], frozenset(final_clause)
+    except IndexError:
+        return 0, frozenset(final_clause)
 def n(term):
     return e(term).negate()
 def e(term):
@@ -118,9 +119,9 @@ for x in range(10,500,10):
         print("dpll", SAT.falsechecks)
     SAT.falsechecks = backtracks = 0
 """
-random.seed(10)
+random.seed(11)
 cdcl([[n(1),n(0)],[e(1),e(0)]])
 print("Welcome to the new world")
-nn=200
-g = generate_random_clause(3,int(4.2)*nn,nn)
+nn=220
+g = generate_random_clause(3,int(4.2*nn),nn)
 print(cdcl(g))
