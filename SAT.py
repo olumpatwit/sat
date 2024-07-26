@@ -64,7 +64,9 @@ def makecset(clauses):
             rv[tuple(entry)] = [clause]
     return list(rv.values())
 from collections import defaultdict
+falsechecks = 0
 def DPLL2(clauses, variable_order=[]):
+    global falsechecks
     if not clauses:
         return True, {}
     varcounts = defaultdict(int)
@@ -76,6 +78,7 @@ def DPLL2(clauses, variable_order=[]):
     for clause in clauses:
         # Empty clause = false
         if len(clause) == 0:
+            falsechecks = falsechecks + 1
             return False, None
         # One-element clause - assume it
         elif len(clause) == 1:
@@ -161,7 +164,7 @@ def generate_random_clause(k, m, n):
         for i, clause in enumerate(new):
             if randbool():
                 new[i] = clause.negate()
-        output.append(set(new))
+        output.append(frozenset(new))
     return output
 def randbool():
     return random.randint(0, 1)

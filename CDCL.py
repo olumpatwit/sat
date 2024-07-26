@@ -1,118 +1,114 @@
-from collections import defaultdict,deque
+import sys
 import random
-from SAT import satisfies_list,Element,generate_random_clause
+from dataclasses import dataclass
+from collections import defaultdict,deque
+from SAT import *
+import SAT
+@dataclass
+class Assignment:
+    value: bool
+    antecedent: list | None
+    dl: int  # decision level
 def build_bcp_map(clauses, terms = None):
-    terms = terms or defaultdict(list)
+    terms = terms or defaultdict(set)
     for clause in clauses:
         for term in clause:
-            terms[term.term].append(clause)
+            terms[term.term].add(clause)
     return terms
-def bcp(clausemap, model, base, decid=0, valid_decids=(0,),
-        implication_map=None):
-    if implication_map is None:
-        implication_map = {}
+def bcp(clausemap, assignments, base, dl):
+    if not isinstance(base, list):
+        assignments[base.term] = Assignment(not base.negated, None, dl)
     todo = deque([base])
-    if not isinstance(base, set):
-        model[base] = (True,decid)
-        model[base.negate()] = (False,decid)
-    loop_counter = 0
     while todo:
-        loop_counter += 1
         what = todo.popleft()
-        if isinstance(what, set):
-            clauses = [what]
+        if isinstance(what, list):
+            clauses = what
         else:
-            assert model[what][0]
-            assert not model[what.negate()][0]
-            assert model[what][1] in valid_decids
-            assert model[what.negate()][1] in valid_decids
             clauses = clausemap[what.term]
         for clause in clauses:
             unseen = []
             for term in clause:
-                if term in model and model[term][1] in valid_decids:
-                    if model[term][0]:
+                if term.term in assignments:
+                    if assignments[term.term].value == (not term.negated):
                         break
                     # Else we know it's false, carry on
                 else:
                     unseen.append(term)
             else:
-                if len(unseen) == 1:
+                if not unseen:
+                    return (True, clause)
+                elif len(unseen) == 1:
                     var, = unseen
-                    model[var] = (True, decid)
-                    model[var.negate()] = (False, decid)
-                    implication_map[var] = clause
+                    assignments[var.term] = Assignment(not var.negated,
+                                                       clause, dl)
                     todo.append(var)
-                if len(unseen) == 0:
-                    return True, resolve_conflict(clause, implication_map)
-        if loop_counter > 100:
-            raise ValueError
-    return False, implication_map
-def resolve_conflict(clause, implication_map):
-    seen = set()
+    return False, None
+def resolve_conflict(clause, assignments, dl):
     final_clause = set(clause)
-    todo = final_clause
-    possible = []
     while True:
-        for resolvent in final_clause-seen:
-            seen.add(resolvent)
-            if resolvent.negate() in implication_map:
-                possible.append(resolvent)
-        if len(possible) > 1:
-            resolvent = possible.pop()
-            final_clause.update(implication_map[resolvent.negate()])
-            final_clause.remove(resolvent)
-            final_clause.remove(resolvent.negate())
-        else:
-            return final_clause
+        poss = {term for term in final_clause if assignments[term.term].dl == dl}
+        if len(poss) == 1:
+            break
+        for lit in final_clause:
+            resolvent = assignments[lit.term].antecedent
+            if resolvent:
+                break
+        final_clause.update(resolvent)
+        final_clause.remove(lit)
+        final_clause.remove(lit.negate())
+    decision_levels = sorted(set(assignments[literal.term].dl for literal in final_clause))
+    if len(decision_levels) <= 1:
+        return 0, frozenset(final_clause)
+    else:
+        return decision_levels[-2], frozenset(final_clause)
 def n(term):
     return e(term).negate()
 def e(term):
     return Element(str(term))
-def cdcc(clauses):
-    model = {}
+backtracks = 0
+def cdcl(clauses):
+    global backtracks
     clausemap = build_bcp_map(clauses)
-    for term in clausemap:
-        model[e(term)] = False,-9999
-        model[n(term)] = False,-9999
-    decid = -1
-    valid_decids = []
-    impmaps = []
-    conflict = False
-    guess = 3
-    while True:
-        if conflict:
-            conflict, other = bcp(clausemap, model, new_clause,
-                                  best_decid, valid_decids,
-                                  impmaps[best_decid])
-        else:
-            decid = decid + 1
-            valid_decids.append(decid)
-            del guess
-            try:
-                guess = random.choice([var for var in clausemap
-                                       if model[e(var)][1] not in valid_decids])
-            except (IndexError,ValueError):
-                dct = {k.term:v[0] for k, v in model.items() if v[1] in valid_decids
-                        and not k.negated}
-                return dct
-            guess = random.choice([e,n])(guess)
-            conflict, other = bcp(clausemap, model, guess, decid, valid_decids)
-        if conflict:
-            new_clause = other
-            build_bcp_map([new_clause], clausemap)
-            best_decid = -9999
-            for term in new_clause:
-                if model[term][1] != decid and model[term][1] in valid_decids:
-                    best_decid = max(best_decid, model[term][1])
-            if best_decid == -9999:
+    assignments = {}
+    dl = 0
+    conflict, clause = bcp(clausemap, assignments, clauses, dl)
+    if conflict:
+        return False
+    while len(assignments) < len(clausemap):
+        guess = max(clausemap.keys()-assignments.keys(),key=lambda x:len(clausemap[x]))
+        val = random.choice([True, False])
+        dl += 1
+        conflict, clause = bcp(clausemap, assignments, Element(guess, val), dl)
+        if not conflict:
+            continue
+        while True:
+            if dl == 0:
                 return False
-            valid_decids = [x for x in valid_decids if x <= best_decid]
-        else:
-            impmaps.append(other)
+            b, new_clause = resolve_conflict(clause, assignments, dl)
+            build_bcp_map([new_clause],clausemap)
+            for term in list(assignments):
+                if assignments[term].dl > b:
+                    del assignments[term]
+            backtracks = backtracks + 1
+            dl = b
+            conflict, clause = bcp(clausemap, assignments, [new_clause], dl)
+            if not conflict:
+                break
+    print(dl)
+    rv = {k:v.value for k,v in assignments.items()}
+    assert satisfies_list(clauses, rv)
+    return rv
 clauses = [{n(2),n(3),n(4),e(5)},{n(1),n(5),e(6)},{n(5),e(7)},
            {n(1),n(6),n(7)},{n(1),n(2),e(5)},{n(1),n(3),e(5)},
            {n(1),n(4),e(5)},{n(1),e(2),e(3),e(4),e(5),n(6)}]
-c = cdcc(clauses)
-assert satisfies_list(clauses, c)
-print(c)
+random.seed(1)
+for x in range(10,600,10):
+    clauses = generate_random_clause(3,x*4,x)
+    import timeit
+    print("---",x)
+    print("cdcl", timeit.timeit("print(cdcl(clauses))","from __main__ import cdcl,clauses",number=1))
+    print("cdcl" ,backtracks)
+    if x < 100:
+        print("dpll", timeit.timeit("DPLL2(clauses)","from __main__ import DPLL2,clauses",number=1))
+        print("dpll", SAT.falsechecks)
+    SAT.falsechecks = backtracks = 0
