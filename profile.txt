@@ -1,0 +1,254 @@
+Welcome to the new world
+{'125q': True, '68q': False, '107q': False, '149q': True, '34q': False, '155q': True, '122q': False, '172q': False, '127q': False, '89q': True, '92q': False, '94q': True, '163q': True, '12q': True, '159q': True, '83q': False, '123q': False, '103q': True, '50q': False, '66q': False, '152q': False, '116q': False, '30q': False, '75q': True, '27q': False, '156q': False, '93q': False, '35q': False, '157q': False, '23q': True, '28q': False, '2q': False, '78q': False, '37q': True, '106q': True, '19q': True, '168q': True, '141q': True, '147q': False, '145q': True, '132q': False, '84q': False, '174q': False, '39q': False, '166q': False, '193q': True, '7q': False, '63q': True, '98q': True, '188q': False, '137q': False, '18q': False, '187q': False, '54q': True, '3q': False, '101q': True, '167q': False, '10q': True, '36q': True, '189q': True, '142q': False, '17q': False, '204q': False, '144q': True, '177q': True, '57q': False, '40q': True, '129q': False, '90q': False, '102q': True, '169q': False, '42q': False, '148q': True, '99q': False, '117q': True, '31q': True, '170q': False, '182q': False, '72q': True, '218q': True, '112q': True, '173q': True, '211q': False, '8q': True, '153q': False, '61q': True, '13q': False, '21q': False, '183q': True, '26q': True, '179q': True, '206q': False, '95q': True, '195q': False, '65q': True, '143q': False, '205q': False, '150q': True, '59q': True, '213q': True, '25q': True, '91q': False, '82q': False, '186q': False, '191q': True, '131q': False, '32q': True, '64q': False, '49q': True, '201q': False, '33q': False, '111q': False, '48q': True, '198q': True, '176q': True, '214q': True, '219q': False, '1q': True, '146q': True, '105q': False, '162q': False, '160q': True, '115q': True, '184q': False, '136q': False, '197q': True, '139q': False, '134q': False, '79q': False, '9q': False, '73q': False, '15q': True, '185q': False, '133q': False, '20q': True, '88q': True, '109q': True, '67q': False, '194q': False, '114q': True, '217q': True, '55q': True, '119q': True, '24q': False, '165q': False, '215q': True, '121q': False, '126q': False, '53q': False, '113q': False, '62q': False, '87q': True, '199q': False, '212q': False, '154q': True, '151q': False, '178q': True, '56q': False, '38q': False, '128q': True, '43q': True, '110q': False, '11q': False, '80q': False, '175q': True, '120q': True, '209q': True, '190q': False, '202q': True, '196q': True, '86q': True, '58q': False, '71q': True, '45q': True, '22q': False, '138q': True, '74q': False, '164q': True, '85q': False, '171q': True, '108q': False, '41q': True, '203q': False, '104q': False, '135q': True, '140q': False, '44q': False, '118q': True, '97q': False, '0q': True, '69q': True, '14q': True, '207q': False, '180q': True, '210q': False, '29q': False, '124q': True, '70q': True, '96q': False, '47q': False, '16q': False, '76q': True, '216q': True, '6q': True, '81q': False, '46q': True, '4q': True, '130q': True, '158q': True, '5q': False, '200q': True, '52q': True, '208q': False, '60q': False, '51q': False, '100q': True, '192q': True, '161q': False, '181q': True, '77q': True}
+         474084052 function calls (474084014 primitive calls) in 480.023 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      7/1    0.000    0.000  480.023  480.023 {built-in method builtins.exec}
+        1    0.048    0.048  480.023  480.023 CDCL.py:1(<module>)
+        2    0.680    0.340  479.951  239.976 CDCL.py:70(cdcl)
+    83756  367.378    0.004  421.276    0.005 CDCL.py:18(bcp)
+303098145   49.016    0.000   49.016    0.000 {method 'append' of 'list' objects}
+    36782   13.400    0.000   31.131    0.001 CDCL.py:47(resolve_conflict)
+    46980    5.964    0.000   25.513    0.001 {built-in method builtins.max}
+ 15708047    7.776    0.000   16.520    0.000 CDCL.py:81(<lambda>)
+ 36285467    9.883    0.000   15.402    0.000 SAT.py:14(__hash__)
+  6394634    3.374    0.000    6.594    0.000 {method 'remove' of 'set' objects}
+ 36285467    5.519    0.000    5.519    0.000 {built-in method builtins.hash}
+  4693596    2.290    0.000    4.499    0.000 SAT.py:8(negate)
+ 25149648    3.388    0.000    3.388    0.000 {built-in method builtins.len}
+ 15755021    3.029    0.000    3.029    0.000 CDCL.py:80(<genexpr>)
+  3197317    2.103    0.000    2.723    0.000 {method 'update' of 'set' objects}
+  4693820    1.424    0.000    2.210    0.000 SAT.py:4(__init__)
+  8998325    1.490    0.000    1.490    0.000 SAT.py:12(__eq__)
+    36784    0.629    0.000    1.350    0.000 CDCL.py:12(build_bcp_map)
+  6310211    1.124    0.000    1.124    0.000 {built-in method builtins.isinstance}
+  1930454    0.379    0.000    0.379    0.000 {method 'append' of 'collections.deque' objects}
+  1977426    0.313    0.000    0.313    0.000 <string>:2(__init__)
+  1531621    0.296    0.000    0.296    0.000 {method 'popleft' of 'collections.deque' objects}
+   879866    0.292    0.000    0.292    0.000 {method 'add' of 'set' objects}
+   911100    0.158    0.000    0.158    0.000 CDCL.py:60(<genexpr>)
+    36782    0.049    0.000    0.049    0.000 {built-in method builtins.sorted}
+        1    0.003    0.003    0.020    0.020 SAT.py:160(generate_random_clause)
+     2772    0.001    0.000    0.008    0.000 SAT.py:170(randbool)
+     2772    0.001    0.000    0.007    0.000 random.py:332(randint)
+     2772    0.002    0.000    0.006    0.000 random.py:291(randrange)
+      924    0.003    0.000    0.006    0.000 random.py:359(sample)
+     5554    0.003    0.000    0.005    0.000 random.py:242(_randbelow_with_getrandbits)
+      7/2    0.000    0.000    0.003    0.001 <frozen importlib._bootstrap>:1349(_find_and_load)
+      7/2    0.000    0.000    0.003    0.001 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+      7/2    0.000    0.000    0.002    0.001 <frozen importlib._bootstrap>:911(_load_unlocked)
+      3/2    0.000    0.000    0.002    0.001 <frozen importlib._bootstrap_external>:989(exec_module)
+     14/4    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+     8860    0.001    0.000    0.001    0.000 {method 'getrandbits' of '_random.Random' objects}
+        1    0.000    0.000    0.001    0.001 random.py:1(<module>)
+        7    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:1240(_find_spec)
+        3    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:1520(find_spec)
+        3    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:1491(_get_spec)
+     8316    0.001    0.000    0.001    0.000 {built-in method _operator.index}
+        9    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:1593(find_spec)
+        2    0.000    0.000    0.001    0.000 SAT.py:177(satisfies_list)
+        2    0.000    0.000    0.001    0.000 {built-in method builtins.all}
+        3    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:1062(get_code)
+     5554    0.001    0.000    0.001    0.000 {method 'bit_length' of 'int' objects}
+      928    0.000    0.000    0.001    0.000 SAT.py:178(<genexpr>)
+        1    0.000    0.000    0.001    0.001 dataclasses.py:1247(dataclass)
+        1    0.000    0.000    0.001    0.001 dataclasses.py:1264(wrap)
+       15    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:140(_path_stat)
+        1    0.000    0.000    0.001    0.001 dataclasses.py:921(_process_class)
+       15    0.001    0.000    0.001    0.000 {built-in method nt.stat}
+      924    0.000    0.000    0.001    0.000 <frozen abc>:117(__instancecheck__)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1183(get_data)
+      926    0.000    0.000    0.000    0.000 SAT.py:172(satisfies)
+       45    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:96(_path_join)
+        3    0.000    0.000    0.000    0.000 dataclasses.py:449(_create_fn)
+        3    0.000    0.000    0.000    0.000 {built-in method _io.open_code}
+      924    0.000    0.000    0.000    0.000 {built-in method _abc._abc_instancecheck}
+        1    0.000    0.000    0.000    0.000 dataclasses.py:568(_init_fn)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:806(module_from_spec)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:751(_compile_bytecode)
+        3    0.000    0.000    0.000    0.000 {built-in method marshal.loads}
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:416(__enter__)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:159(_path_isfile)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:150(_path_is_mode_type)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1202(path_stats)
+        1    0.000    0.000    0.000    0.000 inspect.py:3333(signature)
+        1    0.000    0.000    0.000    0.000 inspect.py:3071(from_callable)
+      3/1    0.000    0.000    0.000    0.000 inspect.py:2491(_signature_from_callable)
+        3    0.000    0.000    0.000    0.000 {method 'read' of '_io.BufferedReader' objects}
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:482(cache_from_source)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:733(_init_module_attrs)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+        1    0.000    0.000    0.000    0.000 dataclasses.py:627(_repr_fn)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:304(acquire)
+        1    0.000    0.000    0.000    0.000 dataclasses.py:661(_cmp_fn)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:632(cached)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:611(_get_cached)
+        1    0.000    0.000    0.000    0.000 bisect.py:1(<module>)
+        4    0.000    0.000    0.000    0.000 {built-in method builtins.__build_class__}
+        1    0.000    0.000    0.000    0.000 inspect.py:2387(_signature_from_function)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:426(_get_module_lock)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:162(__enter__)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:989(create_module)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1588(_get_spec)
+      153    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        4    0.000    0.000    0.000    0.000 cp1252.py:18(encode)
+        4    0.000    0.000    0.000    0.000 {built-in method _imp.create_builtin}
+        3    0.000    0.000    0.000    0.000 {method '__exit__' of '_io._IOBase' objects}
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:124(setdefault)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:802(spec_from_file_location)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:982(find_spec)
+        2    0.000    0.000    0.000    0.000 random.py:135(seed)
+        1    0.000    0.000    0.000    0.000 inspect.py:3287(__str__)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:420(__exit__)
+      141    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:997(exec_module)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:132(_path_split)
+       99    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+       64    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 {built-in method _codecs.charmap_encode}
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:372(release)
+        1    0.000    0.000    0.000    0.000 random.py:126(__init__)
+        4    0.000    0.000    0.000    0.000 {built-in method _imp.exec_builtin}
+        3    0.000    0.000    0.000    0.000 dataclasses.py:760(_get_field)
+        2    0.000    0.000    0.000    0.000 {function Random.seed at 0x000001B584CAA200}
+        1    0.000    0.000    0.000    0.000 SAT.py:1(<module>)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:232(__init__)
+        4    0.000    0.000    0.000    0.000 inspect.py:2733(__init__)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:185(_path_abspath)
+        3    0.000    0.000    0.000    0.000 inspect.py:2020(_signature_get_user_defined_method)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:662(spec_from_loader)
+       62    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+        3    0.000    0.000    0.000    0.000 inspect.py:2820(__str__)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:172(_path_isabs)
+        1    0.000    0.000    0.000    0.000 inspect.py:2114(_signature_bound_method)
+        2    0.000    0.000    0.000    0.000 inspect.py:176(get_annotations)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:666(_classify_pyc)
+        2    0.000    0.000    0.000    0.000 inspect.py:3019(__init__)
+        4    0.000    0.000    0.000    0.000 dataclasses.py:864(_set_new_attribute)
+        1    0.000    0.000    0.000    0.000 dataclasses.py:250(_recursive_repr)
+       52    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:491(_verbose_message)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:74(__new__)
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:84(_unpack_uint32)
+      3/1    0.000    0.000    0.000    0.000 <frozen abc>:121(__subclasscheck__)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:445(cb)
+       18    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:134(<genexpr>)
+      3/1    0.000    0.000    0.000    0.000 {built-in method _abc._abc_subclasscheck}
+        4    0.000    0.000    0.000    0.000 inspect.py:1457(formatannotation)
+        2    0.000    0.000    0.000    0.000 CDCL.py:65(n)
+       11    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1469(_path_importer_cache)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:699(_validate_timestamp_pyc)
+       29    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 inspect.py:1835(getattr_static)
+       30    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+       26    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:82(remove)
+        1    0.000    0.000    0.000    0.000 inspect.py:3087(replace)
+        1    0.000    0.000    0.000    0.000 random.py:110(Random)
+        1    0.000    0.000    0.000    0.000 functools.py:35(update_wrapper)
+        4    0.000    0.000    0.000    0.000 CDCL.py:67(e)
+       13    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1226(__exit__)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:79(__init__)
+        7    0.000    0.000    0.000    0.000 {built-in method _imp.is_builtin}
+       13    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1222(__enter__)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1128(find_spec)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:645(parent)
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:67(_relax_case)
+        4    0.000    0.000    0.000    0.000 enum.py:726(__call__)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:173(__exit__)
+        2    0.000    0.000    0.000    0.000 inspect.py:1796(_check_class)
+        7    0.000    0.000    0.000    0.000 {built-in method _thread.allocate_lock}
+        2    0.000    0.000    0.000    0.000 inspect.py:748(unwrap)
+       12    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+        1    0.000    0.000    0.000    0.000 dataclasses.py:428(_fields_in_init_order)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:501(_requires_builtin_wrapper)
+       27    0.000    0.000    0.000    0.000 {built-in method _imp.release_lock}
+       27    0.000    0.000    0.000    0.000 {built-in method _imp.acquire_lock}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1390(_handle_fromlist)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:643(_check_name_wrapper)
+        4    0.000    0.000    0.000    0.000 dataclasses.py:857(_set_qualname)
+        1    0.000    0.000    0.000    0.000 inspect.py:2140(_signature_is_builtin)
+        3    0.000    0.000    0.000    0.000 dataclasses.py:404(field)
+       12    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+       14    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.RLock' objects}
+        3    0.000    0.000    0.000    0.000 {built-in method nt._path_splitroot}
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:48(_new_module)
+        3    0.000    0.000    0.000    0.000 {built-in method nt.getcwd}
+        3    0.000    0.000    0.000    0.000 dataclasses.py:489(_field_init)
+       14    0.000    0.000    0.000    0.000 {built-in method _thread.get_ident}
+        5    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 dataclasses.py:437(_tuple_str)
+        7    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x00007FFB29E648F0}
+        7    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 inspect.py:1822(_shadowed_dict)
+        9    0.000    0.000    0.000    0.000 {built-in method from_bytes}
+        5    0.000    0.000    0.000    0.000 inspect.py:3066(<genexpr>)
+       10    0.000    0.000    0.000    0.000 dataclasses.py:461(<genexpr>)
+        7    0.000    0.000    0.000    0.000 {built-in method _weakref._remove_dead_weakref}
+        1    0.000    0.000    0.000    0.000 inspect.py:2482(_descriptor_get)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:599(__init__)
+        1    0.000    0.000    0.000    0.000 random.py:222(__init_subclass__)
+        1    0.000    0.000    0.000    0.000 {built-in method math.exp}
+        7    0.000    0.000    0.000    0.000 {method 'remove' of 'list' objects}
+        4    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+        9    0.000    0.000    0.000    0.000 {built-in method nt.fspath}
+        1    0.000    0.000    0.000    0.000 inspect.py:2154(_signature_is_functionlike)
+        7    0.000    0.000    0.000    0.000 {method 'pop' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 CDCL.py:7(Assignment)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:412(__init__)
+        3    0.000    0.000    0.000    0.000 inspect.py:372(isfunction)
+        3    0.000    0.000    0.000    0.000 {built-in method _imp.find_frozen}
+       11    0.000    0.000    0.000    0.000 inspect.py:2798(kind)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:158(__init__)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.repr}
+        3    0.000    0.000    0.000    0.000 inspect.py:296(isclass)
+        1    0.000    0.000    0.000    0.000 SAT.py:2(Element)
+        1    0.000    0.000    0.000    0.000 random.py:876(SystemRandom)
+        3    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+        4    0.000    0.000    0.000    0.000 enum.py:1129(__new__)
+        3    0.000    0.000    0.000    0.000 dataclasses.py:683(_is_classvar)
+        1    0.000    0.000    0.000    0.000 <frozen abc>:146(update_abstractmethods)
+        1    0.000    0.000    0.000    0.000 {built-in method math.sqrt}
+        4    0.000    0.000    0.000    0.000 {method 'isidentifier' of 'str' objects}
+        3    0.000    0.000    0.000    0.000 dataclasses.py:549(_init_param)
+        2    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 inspect.py:304(ismethoddescriptor)
+        2    0.000    0.000    0.000    0.000 {method 'values' of 'mappingproxy' objects}
+        4    0.000    0.000    0.000    0.000 {method '__contains__' of 'frozenset' objects}
+        5    0.000    0.000    0.000    0.000 {built-in method builtins.callable}
+        3    0.000    0.000    0.000    0.000 {built-in method _imp._fix_co_filename}
+        1    0.000    0.000    0.000    0.000 functools.py:65(wraps)
+        3    0.000    0.000    0.000    0.000 dataclasses.py:477(_field_assign)
+        4    0.000    0.000    0.000    0.000 dataclasses.py:432(<genexpr>)
+        7    0.000    0.000    0.000    0.000 inspect.py:2786(name)
+        2    0.000    0.000    0.000    0.000 {built-in method math.log}
+        3    0.000    0.000    0.000    0.000 dataclasses.py:309(__init__)
+        3    0.000    0.000    0.000    0.000 <frozen _collections_abc>:341(__subclasshook__)
+        2    0.000    0.000    0.000    0.000 {method 'get' of 'mappingproxy' objects}
+        3    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
+        4    0.000    0.000    0.000    0.000 dataclasses.py:1142(<genexpr>)
+        3    0.000    0.000    0.000    0.000 dataclasses.py:691(_is_initvar)
+        1    0.000    0.000    0.000    0.000 inspect.py:518(isbuiltin)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:653(has_location)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1178(get_filename)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1153(__init__)
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+        3    0.000    0.000    0.000    0.000 dataclasses.py:697(_is_kw_only)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:986(create_module)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1014(is_package)
+        2    0.000    0.000    0.000    0.000 {built-in method sys.getrecursionlimit}
+        1    0.000    0.000    0.000    0.000 dataclasses.py:372(__init__)
+        1    0.000    0.000    0.000    0.000 dataclasses.py:433(<genexpr>)
+        3    0.000    0.000    0.000    0.000 inspect.py:2790(default)
+        2    0.000    0.000    0.000    0.000 inspect.py:3079(parameters)
+        2    0.000    0.000    0.000    0.000 inspect.py:3083(return_annotation)
+        1    0.000    0.000    0.000    0.000 <string>:1(__create_fn__)
+        1    0.000    0.000    0.000    0.000 {method 'items' of 'mappingproxy' objects}
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.id}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.vars}
+        1    0.000    0.000    0.000    0.000 dataclasses.py:879(_hash_set_none)
+
+

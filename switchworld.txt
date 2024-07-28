@@ -1,0 +1,17 @@
+# Switch world example
+A1(TurnOn(switch)) -> off(switch, 0)
+A1(TurnOn(switch)) -> ~off(switch, 1)
+A1(TurnOn(switch)) -> on(switch, 1)
+
+A1(TurnOff(switch)) -> on(switch, 0)
+A1(TurnOff(switch)) -> ~on(switch, 1)
+A1(TurnOff(switch)) -> off(switch, 1)
+
+~A1(TurnOn(switch)) V ~A1(TurnOn(switch))
+
+(on(a,1) <-> A1(TurnOn(switch) v (on(a, 0) ^ ~A1(TurnOff(switch)))))
+(off(a,1) <-> A1(TurnOff(switch) v (on(a, 0) ^ ~A1(TurnOn(switch)))))
+
+on(a, 0)
+~off(a, 0)
+off(a, 1)
