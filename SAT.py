@@ -13,7 +13,7 @@ class Element:
         return self.term == other.term and self.negated == other.negated
     def __hash__(self):
         return hash((self.term,self.negated))
-def raw_sort(clauses):
+def raw_search(clauses):
     if not clauses:
         return True, {}
     for clause in clauses:
@@ -21,17 +21,17 @@ def raw_sort(clauses):
             return False, None
         if len(clause) == 1:
             one, = clause
-            found, sofar = DPLL(simplify(clauses, one))
+            found, sofar = raw_search(simplify(clauses, one))
             if found:
                 sofar[one.term] = not one.negated
             return found, sofar
     clause = clauses[0]
     base = next(iter(clause))
-    first, sofar =  DPLL(simplify(clauses, base))
+    first, sofar =  raw_search(simplify(clauses, base))
     if first:
         sofar[base.term] = not base.negated
         return True, sofar
-    second, sofar = DPLL(simplify(clauses, base.negate()))
+    second, sofar = raw_search(simplify(clauses, base.negate()))
     if second:
         sofar[base.term] = base.negated
     return second, sofar

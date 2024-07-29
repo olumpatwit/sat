@@ -102,22 +102,23 @@ def cdcl(clauses):
     rv = {k:v.value for k,v in assignments.items()}
     assert satisfies_list(clauses, rv)
     return rv
-clauses = [{n(2),n(3),n(4),e(5)},{n(1),n(5),e(6)},{n(5),e(7)},
+if __name__ == "__main__":
+    clauses = [{n(2),n(3),n(4),e(5)},{n(1),n(5),e(6)},{n(5),e(7)},
            {n(1),n(6),n(7)},{n(1),n(2),e(5)},{n(1),n(3),e(5)},
            {n(1),n(4),e(5)},{n(1),e(2),e(3),e(4),e(5),n(6)}]
 
-for x in range(10,500,10):
-    clauses = generate_random_clause(3,x*4,x)
-    import timeit
-    print("---",x)
-    print("cdcl", timeit.timeit("print(cdcl(clauses))","from __main__ import cdcl,clauses",number=1))
-    print("cdcl" ,backtracks)
-    if x < 125:
-        print("dpll", timeit.timeit("DPLL2(clauses)","from __main__ import DPLL2,clauses",number=1))
-        print("dpll", SAT.falsechecks)
-    SAT.falsechecks = backtracks = 0
-cdcl([[n(1),n(0)],[e(1),e(0)]])
-print("Welcome to the new world")
-nn=230
-g = generate_random_clause(3,int(4*nn),nn)
-print(cdcl(g))
+    for x in range(10,500,10):
+        clauses = generate_random_clause(3,x*4,x)
+        import timeit
+        print("---",x)
+        print("cdcl", timeit.timeit("print(cdcl(clauses))","from __main__ import cdcl,clauses",number=1))
+        print("cdcl" ,backtracks)
+        if x < 125:
+            print("dpll", timeit.timeit("DPLL2(clauses)","from __main__ import DPLL2,clauses",number=1))
+            print("dpll", SAT.falsechecks)
+        SAT.falsechecks = backtracks = 0
+    cdcl([[n(1),n(0)],[e(1),e(0)]])
+    print("Welcome to the new world")
+    nn=230
+    g = generate_random_clause(3,int(4*nn),nn)
+    print(cdcl(g))
