@@ -1,0 +1,20 @@
+# switch world
+
+predicates: On(x) Off(x)
+constants: A B
+2 actions
+
+TurnOn switch
+pre: Off(switch)
+preneg:
+del: Off(switch)
+add: On(switch)
+
+TurnOff switch
+pre: On(switch)
+preneg:
+del: On(switch)
+add: Off(switch)
+
+initial: On(A) Off(B)
+goal: Off(A) On(B)

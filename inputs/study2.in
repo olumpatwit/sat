@@ -1,0 +1,20 @@
+# Study world
+
+predicates: Smart(x)
+constants: You X Y Z Q W
+2 actions
+
+Study s x
+pre:
+preneg: Tired(s)
+del:
+add: Smart(s,x) Tired(s)
+
+Rest person
+pre: Tired(person)
+preneg:
+del: Tired(person)
+add:
+
+initial: Tired(You)
+goal: Smart(You,X) Smart(You,Y) Smart(X,X) Tired(Y)

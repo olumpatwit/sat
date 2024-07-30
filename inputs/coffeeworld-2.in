@@ -1,0 +1,51 @@
+#
+# Coffee maker world:
+#
+#     There are three burners on the coffee machine. Pots that have
+#     coffee in them must stay on a burner. Empty pots can sit on the
+#     table. Only one burner is under the coffee spout.
+#
+
+
+predicates: DirtyFilter(x) FreshFilter(x) EmptyFilter(x) EmptyPot(x) FullPot(x) ClearBurner(x) UnderSpout(x) OnBurner(x, y) OnTable(x)
+constants: Filter BurnerOne FrenchRoastPot OurBlendPot BurnerTwo BurnerThree FlavoredPot OurBlendPot2
+6 actions
+
+EmptyFilter filter
+pre: DirtyFilter(filter)
+preneg:
+del: DirtyFilter(filter)
+add: EmptyFilter(filter)
+
+FillFilter filter
+pre: EmptyFilter(filter)
+preneg:
+del: EmptyFilter(filter)
+add: FreshFilter(filter)
+
+MoveToTable pot src
+pre: OnBurner(pot, src) EmptyPot(pot)
+preneg:
+del: OnBurner(pot, src)
+add: ClearBurner(src) OnTable(pot)
+
+MoveToBurner pot dst
+pre: OnTable(pot) ClearBurner(dst)
+preneg:
+del: OnTable(pot) ClearBurner(dst)
+add: OnBurner(pot, dst)
+
+Move pot src dst
+pre: OnBurner(pot, src) ClearBurner(dst)
+preneg:
+del: OnBurner(pot, src) ClearBurner(dst)
+add: OnBurner(pot, dst) ClearBurner(src)
+
+StartCoffee pot burner filter
+pre: OnBurner(pot, burner) EmptyPot(pot) UnderSpout(burner) FreshFilter(filter)
+preneg:
+del: FreshFilter(filter) EmptyPot(pot)
+add: DirtyFilter(filter) FullPot(pot)
+
+initial: UnderSpout(BurnerOne) DirtyFilter(Filter) FullPot(OurBlendPot) OnBurner(OurBlendPot, BurnerOne) EmptyPot(FrenchRoastPot) OnTable(FrenchRoastPot) OnBurner(FlavoredPot,BurnerTwo) OnBurner(OurBlendPot2, BurnerThree) EmptyPot(FlavoredPot) EmptyPot(OurBlendPot2)
+goal: FullPot(FrenchRoastPot) EmptyFilter(Filter)

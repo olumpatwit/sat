@@ -144,11 +144,13 @@ def world_to_sat(world, times):
                 yield {action.tosat(t, True), pre.tosat(t)}
             for preneg in action.preneg:
                 interesting.add(preneg)
-                yield {action.tosat(t, True), preneg.tosat(t)}
+                yield {action.tosat(t, True), preneg.tosat(t, True)}
             for add in action.add:
                 interesting.add(add)
                 addme[add].add(action)
+                yield {action.tosat(t, True), add.tosat(t+1)}
             for delete in action.delete:
+                yield {action.tosat(t, True), delete.tosat(t+1,True)}
                 deleteme[delete].add(action)
             # Action exclusion states
             for action2 in actions:
@@ -157,18 +159,25 @@ def world_to_sat(world, times):
                     yield {action.tosat(t, True), action2.tosat(t, True)}
         # State propogation axioms
         for state in interesting:
-            # [state,t+1] -> [state,t] or any action in addme[state] at t)
+            # Unless you performed an action that added a state it isn't added
             clause = {state.tosat(t+1, True),state.tosat(t)}
             for action in addme[state]:
                 clause.add(action.tosat(t))
             yield clause
-            # ~[state,t+1] -> ~[state,t] or any action in deleteme[state] at t)
+            # Unless you performed an action that deleted the state it isn't deleted
             clause = {state.tosat(t+1,False),state.tosat(t, True)}
             for action in deleteme[state]:
                 clause.add(action.tosat(t))
+            yield clause
     for state in goal:
         if state not in interesting:
             raise ValueError("Impossible goal state")
         yield {state.tosat(t+1)}
     for state in interesting:
         yield {state.tosat(0, not (state in initial))}
+def actions(x):
+    results = cdcl(x)
+    if results:
+        return sorted(k for k,v in cdcl(x).items() if k[0] == "A" and v)
+    else:
+        return results

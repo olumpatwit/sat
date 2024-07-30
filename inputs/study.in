@@ -1,0 +1,21 @@
+# Study world
+
+predicates: Know(x, y) Tired(x)
+constants: ComputerScience Frank You Math Biology TheMuffinMan
+2 actions
+
+Study subject person
+pre:
+preneg: Know(subject, person) Tired(person)
+del:
+add: Know(subject, person) Tired(person)
+
+Rest person
+pre: Tired(person)
+preneg:
+del: Tired(person)
+add:
+
+initial: Tired(Frank) Tired(You)
+goal: Know(ComputerScience, Frank) Know(ComputerScience, You) Know(TheMuffinMan, You) Know(Math, Frank) Tired(TheMuffinMan)
+
