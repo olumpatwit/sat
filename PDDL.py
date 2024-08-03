@@ -154,8 +154,7 @@ def world_to_sat(world, times):
                 deleteme[delete].add(action)
             # Action exclusion states
             for action2 in actions:
-                if action2 is not action:
-                    # TODO: Avoid duplicate clauses here
+                if id(action2) < id(action):
                     yield {action.tosat(t, True), action2.tosat(t, True)}
         # State propogation axioms
         for state in interesting:
